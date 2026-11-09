@@ -10,14 +10,12 @@ This repository contains two primary Python implementations.
 3. `sorting_comparison.py`: A script to empirically benchmark Heapsort against Merge Sort and Randomized Quicksort.
 
 ## How to Run the Code
-The project was developed and tested on Ubuntu Linux using Python 3.
 
 To run the priority queue simulation:
 1. Execute the command: `python3 priority_queue.py`
 
 To run the empirical sorting benchmark:
-1. Ensure `heapsort.py` and `sorting_comparison.py` are in the same directory.
-2. Execute the command: `python3 sorting_comparison.py`
+1. Execute the command: `python3 sorting_comparison.py`
 
 ## Summary of Findings
 The empirical testing confirmed the theoretical analysis. Heapsort provided highly consistent execution times across random, sorted, and reverse-sorted arrays due to its structural reliance on the max-heap properties, guaranteeing an O(n log n) worst-case time complexity. The Max-Priority Queue successfully maintained O(log n) time complexity for insertions and extractions. By utilizing an index-tracking dictionary, the queue also maintained O(log n) time complexity for the increase-key operation by eliminating the need for an O(n) linear search.
