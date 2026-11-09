@@ -1,7 +1,6 @@
 import random
 import time
 import sys
-from heapsort import *
 
 # Increase recursion depth for deterministic quicksort's worst-case
 sys.setrecursionlimit(2500)
