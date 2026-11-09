@@ -1,57 +1,51 @@
-def left(i):
-    """Return the index of the left child for a 0-indexed array."""
-    return 2 * i + 1
-
-def right(i):
-    """Return the index of the right child for a 0-indexed array."""
-    return 2 * i + 2
-
-def parent(i):
-    """Return the index of the parent for a 0-indexed array."""
-    return (i - 1) // 2
-
 def max_heapify(arr, n, i):
     """
-    Maintains the max-heap property.
-    n is the current size of the heap.
-    i is the index of the current node being evaluated.
+    Restores the max-heap property for a subtree rooted at index i.
+    Takes O(log n) time, as it traverses a single path down the heap's height.
     """
     largest = i
-    l = left(i)
-    r = right(i)
+    left = 2 * i + 1
+    right = 2 * i + 2
 
-    # Check if left child exists and is greater than the parent
-    if l < n and arr[l] > arr[largest]:
-        largest = l
+    # Find the largest element among the root, left child, and right child
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+        
+    if right < n and arr[right] > arr[largest]:
+        largest = right
 
-    # Check if right child exists and is greater than the largest so far
-    if r < n and arr[r] > arr[largest]:
-        largest = r
-
-    # If the largest is not the parent, swap and recursively heapify
+    # Swap and recursively heapify if the root is not the largest
     if largest != i:
         arr[i], arr[largest] = arr[largest], arr[i]
         max_heapify(arr, n, largest)
 
 def build_max_heap(arr):
-    """Builds a max-heap from an unsorted array."""
+    """
+    Transforms an unordered array into a valid max-heap.
+    Takes O(n) time by calling max_heapify bottom-up.
+    """
     n = len(arr)
-    # Start from the last non-leaf node and move up to the root
+    # Start from the last non-leaf node and move backward to the root
     for i in range(n // 2 - 1, -1, -1):
         max_heapify(arr, n, i)
 
-def heap_sort(arr):
-    """Sorts an array in-place using Heapsort."""
+def heapsort(arr):
+    """
+    Sorts an array in-place using the Heapsort algorithm.
+    Guarantees an O(n log n) worst-case time complexity.
+    """
+    # Handle empty or single-element arrays in O(1) time
+    if len(arr) <= 1:
+        return arr
+        
+    build_max_heap(arr)
     n = len(arr)
     
-    # Phase 1: Build the initial max-heap
-    build_max_heap(arr)
-
-    # Phase 2: Extract elements one by one
+    # Repeatedly extract the maximum element and rebuild the heap
     for i in range(n - 1, 0, -1):
-        # Swap the max element (at root 0) to the end of the current heap
-        arr[i], arr[0] = arr[0], arr[i]
-        # Restore the max-heap property on the reduced heap
+        # Swap the max element (root) to its final sorted position at the end
+        arr[0], arr[i] = arr[i], arr[0]
+        # Shrink the active heap size (represented by i) and restore the root
         max_heapify(arr, i, 0)
-    
+        
     return arr
